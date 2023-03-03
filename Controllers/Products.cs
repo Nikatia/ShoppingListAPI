@@ -24,5 +24,46 @@ namespace ShoppingListAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("productExists/{productName}")]
+        public ActionResult CheckProduct(string productName)
+        {
+            try
+            {
+                var exists = db.Products.Any(p => p.ProductName== productName);
+
+                if (exists)
+                {
+                    var existingProduct = (from p in db.Products where p.ProductName == productName select p).FirstOrDefault();
+                    return Ok(existingProduct.CategoryId);
+                }
+                else
+                {
+                    return NotFound();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error: " + ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("")]
+        public ActionResult PostProduct([FromBody] Product product) 
+        {
+            try
+            {
+                db.Products.Add(product);
+                db.SaveChanges();
+                return Ok("New item has been added.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error: " + ex.Message);
+            }
+        }
     }
 }

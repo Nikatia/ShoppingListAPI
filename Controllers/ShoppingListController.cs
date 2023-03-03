@@ -152,7 +152,7 @@ namespace ShoppingListAPI.Controllers
             var result = (from sl in db.ListedItems where sl.ProductId == id select new { sl.ListedItemId, sl.ProductId, sl.Amount }).ToList();
             if (result.Count == 0) 
             {
-                return NotFound("Product is NOT on the list");
+                return Ok("Does not exist");
             }
             else
             {

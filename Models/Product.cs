@@ -13,7 +13,7 @@ public partial class Product
 
     public string? PictureLink { get; set; }
 
-    public virtual Category Category { get; set; } = null!;
+    public virtual Category? Category { get; set; } = null!;
 
     public virtual ICollection<ListedItem> ListedItems { get; } = new List<ListedItem>();
 
